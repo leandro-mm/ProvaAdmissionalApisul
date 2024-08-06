@@ -5,6 +5,10 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProvaAdmissionalApisul", "ProvaAdmissionalApisul\ProvaAdmissionalApisul.csproj", "{BA5DA6C9-412D-435D-B81E-2D55DC9C6977}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppLogic", "AppLogic\AppLogic.csproj", "{21183A10-BE9B-47F4-BAD5-CCEC21F87D6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppData", "AppData\AppData.csproj", "{F92CF452-B62E-4838-ADEF-5A22ED93A760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{BA5DA6C9-412D-435D-B81E-2D55DC9C6977}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA5DA6C9-412D-435D-B81E-2D55DC9C6977}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA5DA6C9-412D-435D-B81E-2D55DC9C6977}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21183A10-BE9B-47F4-BAD5-CCEC21F87D6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21183A10-BE9B-47F4-BAD5-CCEC21F87D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21183A10-BE9B-47F4-BAD5-CCEC21F87D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21183A10-BE9B-47F4-BAD5-CCEC21F87D6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F92CF452-B62E-4838-ADEF-5A22ED93A760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F92CF452-B62E-4838-ADEF-5A22ED93A760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F92CF452-B62E-4838-ADEF-5A22ED93A760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F92CF452-B62E-4838-ADEF-5A22ED93A760}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
