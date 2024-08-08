@@ -2,7 +2,7 @@ O aplicativo implementa a interface IElevadorService para obter análise de dado
 
 Cada item da collection contém as seguintes propriedades: Elevador (char), Andar (int), Turno (char).
 
-Para realizar a análise de dados foi utilizado basicamente apenas LINQ (consulta integrada à linguagem). 
+Para realizar a análise de dados foi utilizado basicamente apenas LINQ (Language Integrated Query). 
 
 A implementação da interface pode ser verificada no caminho ProvaAdmissionalApisul/AppLogic/ElevadorService.cs
 
