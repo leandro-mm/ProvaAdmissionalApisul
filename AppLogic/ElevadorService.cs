@@ -3,39 +3,25 @@ using AppData;
 using System.Linq;
 using System.Collections.Immutable;
 using System.Collections.Generic;
+using System.Data;
 
 namespace AppLogic
 {
     /// <summary>
     /// Classe que utiliza uma List<HistoricoUsoElevador> para processar dados utilizando LINQ 
     /// </summary>
-    public class ElevadorService : IElevadorService
+    public class ElevadorService : IElevadorService, IDadosService
     {
-        private List<HistoricoUsoElevador> _historicoServices;
+        private IEnumerable<HistoricoUsoElevador?> _historicoServices;
 
-        public void LoadData()
+        public int TotalServicos()
         {
-            if (_historicoServices == null)
-            {
-                _historicoServices = new List<HistoricoUsoElevador>();
-                //for (int i = 0; i < 100; i++)
-                //{
-                //    char elevador = 'A'; int andar = 1; char turno = 'M';
-                //    this._historicoServices.Add(new HistoricoUsoElevador(elevador, andar, turno));
-                //    this._historicoServices.Add(new HistoricoUsoElevador('Z', andar, 'N'));
-                //}
-                this._historicoServices.Add(new HistoricoUsoElevador('B', 2, 'M'));
-                this._historicoServices.Add(new HistoricoUsoElevador('B', 2, 'M'));
-                this._historicoServices.Add(new HistoricoUsoElevador('B', 2, 'M'));
-                this._historicoServices.Add(new HistoricoUsoElevador('B', 2, 'M'));
-                this._historicoServices.Add(new HistoricoUsoElevador('B', 2, 'M'));
-
-                this._historicoServices.Add(new HistoricoUsoElevador('c', 2, 'n'));
-                this._historicoServices.Add(new HistoricoUsoElevador('c', 2, 'n'));
-                this._historicoServices.Add(new HistoricoUsoElevador('c', 2, 'n'));
-                this._historicoServices.Add(new HistoricoUsoElevador('c', 2, 'n'));
-                this._historicoServices.Add(new HistoricoUsoElevador('c', 2, 'n'));
-            }
+            return _historicoServices == null || !_historicoServices.Any() ? 0 : 
+                _historicoServices.Count(); 
+        }
+        public void LoadData(IDataReaderElevadorService dataReader)
+        {
+            _historicoServices = dataReader.ReadData().ToList(); 
         }
 
         /// <summary>
@@ -46,7 +32,7 @@ namespace AppLogic
         public async Task<List<int>> andarMenosUtilizado()
         {
 
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<int>().ToList();
 
             //--Verifica a maior quantidade de uso dentre todos os elevadores
@@ -61,7 +47,7 @@ namespace AppLogic
         /// <returns>Deve retornar uma List contendo o(s) elevador(es) mais frequentado(s)</returns>
         public async Task<List<char>> elevadorMaisFrequentado()
         {
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<char>().ToList();
 
             //--Verifica a maior quantidade de uso dentre todos os elevadores
@@ -75,7 +61,7 @@ namespace AppLogic
         {
             int value = 0;
 
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return value;
 
             value = await Task.Run(() =>
@@ -102,7 +88,7 @@ namespace AppLogic
         /// <returns></returns>
         public async Task<List<char>> elevadorMenosFrequentado()
         {
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<char>().ToList();
 
             //--Verifica a maior quantidade de uso dentre todos os elevadores
@@ -117,7 +103,7 @@ namespace AppLogic
         /// <returns>Deve retornar um float (duas casas decimais) contendo o percentual de uso do elevador A em relação a todos os serviços prestados.</returns>
         public float percentualDeUsoElevadorA()
         {
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return 0;
             return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'A').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
 
@@ -125,33 +111,33 @@ namespace AppLogic
 
         public float percentualDeUsoElevadorB()
         {
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return 0;
             return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'B').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
         }
 
         public float percentualDeUsoElevadorC()
         {
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return 0;
             return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'C').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
         }
 
         public float percentualDeUsoElevadorD()
         {
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return 0;
             return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'D').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
         }
 
+        /// <summary> Deve retornar um float (duas casas decimais) contendo o percentual de uso do elevador E em relação a todos os serviços prestados. </summary> 
         public float percentualDeUsoElevadorE()
-        {
-            if (_historicoServices == null || !_historicoServices.Any())
-                return 0;
-            return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'E').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
+        {            
+            return VerificarPercentualUsoPorElevador('E', _historicoServices.Count());
         }
 
        
+
         public async Task<List<char>> periodoMaiorFluxoElevadorMaisFrequentado()
         {
             List<char> listaElevadores = await elevadorMaisFrequentado();
@@ -171,7 +157,7 @@ namespace AppLogic
             //[2] monta uma estrutura de dados chave/valor contendo a utilização e a quantidade de vezes que essa utilização foi encontrada na string [1]
             //[3] seleciona a maior ocorrencia com base no valor da estrutura [2] e peloValorMaximo variável
 
-            if (!_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<char>().ToList();
 
             bool peloValorMaximo = true;
@@ -213,13 +199,15 @@ namespace AppLogic
         {
             List<char> listaElevadores = await elevadorMenosFrequentado();
 
-            if (!listaElevadores.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<char>().ToList();
 
             bool peloValorMaximo = false;
             return ObterDadosFluxo(listaElevadores, peloValorMaximo);
         }
 
+        #region Outros
+        
         /// <summary>
         /// Recebe uma string que representa um conjunto de dados separados por vírgula
         /// verifica a quantidade de ocorrencias repetidas de cada item
@@ -256,7 +244,7 @@ namespace AppLogic
         /// <param name="listElevadores">null se todos os elevadores</param>
         /// <param name="peloValorMaximo">indica se é para verificar o maior fluxo de uso dos elevadores</param>
         /// <returns>Deve retornar uma List contendo o período de maior fluxo de cada um dos elevadores</returns>
-        private List<char> ObterDadosFluxo(List<char> listElevadores, bool peloValorMaximo)
+        public List<char> ObterDadosFluxo(List<char> listElevadores, bool peloValorMaximo)
         {
             //[1] busca os dados dos elevadores 
             //[2] agrupa os dados por elevador, resultando em uma estrutura do tipo 1->n
@@ -284,7 +272,7 @@ namespace AppLogic
             }
         }
 
-        private List<char> ListStringToChar(IEnumerable<string> listString)
+        public List<char> ListStringToChar(IEnumerable<string> listString)
         {
             if(listString.Any())
             {
@@ -314,10 +302,10 @@ namespace AppLogic
         /// </summary>
         /// <param name="frequencia">a frequencia de uso</param>
         /// <returns>lista de elevadores</returns>
-        private List<char> BuscarItemPorFrequenciaUso(IEnumerable<IGrouping<char,HistoricoUsoElevador>> grupo, int frequencia)
+        public List<char> BuscarItemPorFrequenciaUso(IEnumerable<IGrouping<char,HistoricoUsoElevador>> grupo, int frequencia)
         {
 
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<char>().ToList();
 
             try
@@ -334,10 +322,10 @@ namespace AppLogic
             }
 
         }
-        private List<int> BuscarItemPorFrequenciaUso(IEnumerable<IGrouping<int, HistoricoUsoElevador>> grupo, int frequencia)
+        public List<int> BuscarItemPorFrequenciaUso(IEnumerable<IGrouping<int, HistoricoUsoElevador>> grupo, int frequencia)
         {
 
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return Enumerable.Empty<int>().ToList();
 
             try
@@ -360,11 +348,11 @@ namespace AppLogic
         /// </summary>
         /// <param name="byMaxValue">se deve ser verificado a maior frequencia de uso</param>
         /// <returns>a frequencia de uso</returns>
-        private async Task<int> VerificarFrequenciaUsoPorGrupo(IEnumerable<IGrouping<char, HistoricoUsoElevador>> grupo, bool byMaxValue)
+        public async Task<int> VerificarFrequenciaUsoPorGrupo(IEnumerable<IGrouping<char, HistoricoUsoElevador>> grupo, bool byMaxValue)
         {
             var result = 0;
 
-            if (_historicoServices == null || !_historicoServices.Any())
+            if (TotalServicos() == 0)
                 return result;
 
             result = await Task.Run(() =>
@@ -385,5 +373,12 @@ namespace AppLogic
             return result;
         }
 
+        public float VerificarPercentualUsoPorElevador(char elevador, int totalServicosPrestados)
+        {
+            if (totalServicosPrestados == 0)
+                return 0;
+            return float.Parse(Math.Round(((double)(_historicoServices.Where(e => e.Elevador == 'E').Count() / (double)totalServicosPrestados) * 100), 2).ToString());
+        }
+        #endregion
     }
 }

@@ -1,17 +1,17 @@
-﻿
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+
 
 namespace AppData
 {
-    public class JsonDataRader : IDataReaderElevadorService
+    internal class JsonReader : IDataReaderElevadorService
     {
         private readonly string _JsonFilePath;
 
-        public JsonDataRader(string jsonFilePath)
+        public JsonReader(string jsonFilePath)
         {
-            _JsonFilePath = jsonFilePath;
+            _JsonFilePath=jsonFilePath; 
         }
-        public IEnumerable<HistoricoUsoElevador?> ReadData()
+        public IEnumerable<HistoricoUsoElevador?> Read()
         {
             using StreamReader streamReader = new StreamReader(_JsonFilePath);
             var json = streamReader.ReadToEnd();

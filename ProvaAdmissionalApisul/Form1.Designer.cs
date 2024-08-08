@@ -30,6 +30,7 @@
         {
             btnExtrairInf = new Button();
             textBox1 = new TextBox();
+            openFileDialog1 = new OpenFileDialog();
             SuspendLayout();
             // 
             // btnExtrairInf
@@ -52,6 +53,10 @@
             textBox1.TabIndex = 1;
             textBox1.WordWrap = false;
             // 
+            // openFileDialog1
+            // 
+            openFileDialog1.FileName = "openFileDialog1";
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -69,5 +74,6 @@
 
         private Button btnExtrairInf;
         private TextBox textBox1;
+        private OpenFileDialog openFileDialog1;
     }
 }

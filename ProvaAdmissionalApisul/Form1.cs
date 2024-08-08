@@ -2,7 +2,9 @@ namespace ProvaAdmissionalApisul
 {
 
     using AppLogic;
+    using AppService;
     using System.Collections.Generic;
+    using System.Reflection;
 
     public partial class Form1 : Form
     {
@@ -15,41 +17,54 @@ namespace ProvaAdmissionalApisul
         {
             ClearTextBox(this.textBox1);
 
-            ElevadorService elevadorService = new ElevadorService();
-            elevadorService.LoadData();
+            DialogResult dialogResult = this.openFileDialog1.ShowDialog();
 
-            var andarMenosUtilizado = await elevadorService.andarMenosUtilizado();
-            projetarResultado(nameof(andarMenosUtilizado), andarMenosUtilizado);
+            if (dialogResult == DialogResult.OK)
+            {
+                ElevadorService elevadorService = new ElevadorService();
+                elevadorService.LoadData(new AppService(openFileDialog1.FileName));
 
-            var elevadorMaisFrequentado = await elevadorService.elevadorMaisFrequentado();
-            projetarResultado(nameof(elevadorMaisFrequentado), elevadorMaisFrequentado);
+                if (elevadorService.TotalServicos() > 0)
+                {
+                    var andarMenosUtilizado = await elevadorService.andarMenosUtilizado();
+                    projetarResultado(nameof(andarMenosUtilizado), andarMenosUtilizado);
 
-            var elevadorMenosFrequentado = await elevadorService.elevadorMenosFrequentado();
-            projetarResultado(nameof(elevadorMenosFrequentado), elevadorMenosFrequentado);
+                    var elevadorMaisFrequentado = await elevadorService.elevadorMaisFrequentado();
+                    projetarResultado(nameof(elevadorMaisFrequentado), elevadorMaisFrequentado);
 
-            var percentualDeUsoElevadorA = elevadorService.percentualDeUsoElevadorA();
-            projetarResultado(nameof(percentualDeUsoElevadorA), percentualDeUsoElevadorA);
+                    var elevadorMenosFrequentado = await elevadorService.elevadorMenosFrequentado();
+                    projetarResultado(nameof(elevadorMenosFrequentado), elevadorMenosFrequentado);
 
-            var percentualDeUsoElevadorB = elevadorService.percentualDeUsoElevadorB();
-            projetarResultado(nameof(percentualDeUsoElevadorB), percentualDeUsoElevadorB);
+                    var percentualDeUsoElevadorA = elevadorService.percentualDeUsoElevadorA();
+                    projetarResultado(nameof(percentualDeUsoElevadorA), percentualDeUsoElevadorA);
 
-            var percentualDeUsoElevadorC = elevadorService.percentualDeUsoElevadorC();
-            projetarResultado(nameof(percentualDeUsoElevadorC), percentualDeUsoElevadorC);
+                    var percentualDeUsoElevadorB = elevadorService.percentualDeUsoElevadorB();
+                    projetarResultado(nameof(percentualDeUsoElevadorB), percentualDeUsoElevadorB);
 
-            var percentualDeUsoElevadorD = elevadorService.percentualDeUsoElevadorD();
-            projetarResultado(nameof(percentualDeUsoElevadorD), percentualDeUsoElevadorD);
+                    var percentualDeUsoElevadorC = elevadorService.percentualDeUsoElevadorC();
+                    projetarResultado(nameof(percentualDeUsoElevadorC), percentualDeUsoElevadorC);
 
-            var percentualDeUsoElevadorE = elevadorService.percentualDeUsoElevadorE();
-            projetarResultado(nameof(percentualDeUsoElevadorE), percentualDeUsoElevadorE);
+                    var percentualDeUsoElevadorD = elevadorService.percentualDeUsoElevadorD();
+                    projetarResultado(nameof(percentualDeUsoElevadorD), percentualDeUsoElevadorD);
 
-            var periodoMaiorFluxoElevadorMaisFrequentado = await elevadorService.periodoMaiorFluxoElevadorMaisFrequentado();
-            projetarResultado(nameof(periodoMaiorFluxoElevadorMaisFrequentado), periodoMaiorFluxoElevadorMaisFrequentado);
+                    var percentualDeUsoElevadorE = elevadorService.percentualDeUsoElevadorE();
+                    projetarResultado(nameof(percentualDeUsoElevadorE), percentualDeUsoElevadorE);
 
-            var periodoMenorFluxoElevadorMenosFrequentado = await elevadorService.periodoMenorFluxoElevadorMenosFrequentado();
-            projetarResultado(nameof(periodoMenorFluxoElevadorMenosFrequentado), periodoMenorFluxoElevadorMenosFrequentado);
+                    var periodoMaiorFluxoElevadorMaisFrequentado = await elevadorService.periodoMaiorFluxoElevadorMaisFrequentado();
+                    projetarResultado(nameof(periodoMaiorFluxoElevadorMaisFrequentado), periodoMaiorFluxoElevadorMaisFrequentado);
 
-            var periodoMaiorUtilizacaoConjuntoElevadores = elevadorService.periodoMaiorUtilizacaoConjuntoElevadores();
-            projetarResultado(nameof(periodoMaiorUtilizacaoConjuntoElevadores), periodoMaiorUtilizacaoConjuntoElevadores);
+                    var periodoMenorFluxoElevadorMenosFrequentado = await elevadorService.periodoMenorFluxoElevadorMenosFrequentado();
+                    projetarResultado(nameof(periodoMenorFluxoElevadorMenosFrequentado), periodoMenorFluxoElevadorMenosFrequentado);
+
+                    var periodoMaiorUtilizacaoConjuntoElevadores = elevadorService.periodoMaiorUtilizacaoConjuntoElevadores();
+                    projetarResultado(nameof(periodoMaiorUtilizacaoConjuntoElevadores), periodoMaiorUtilizacaoConjuntoElevadores);
+                }
+                else
+                {
+                    textBox1.Text = "Nenhuma informação para processar";
+                }
+            }
+            
 
         }
 
