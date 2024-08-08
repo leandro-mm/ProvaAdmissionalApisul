@@ -103,8 +103,7 @@ namespace AppLogic
         /// <returns>Deve retornar um float (duas casas decimais) contendo o percentual de uso do elevador A em relação a todos os serviços prestados.</returns>
         public float percentualDeUsoElevadorA()
         {
-            return VerificarPercentualUsoPorElevador('A', _historicoServices.Count());            
-
+            return VerificarPercentualUsoPorElevador('A', _historicoServices.Count());     
         }
 
         public float percentualDeUsoElevadorB()
