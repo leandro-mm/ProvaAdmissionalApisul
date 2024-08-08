@@ -2,8 +2,14 @@
 {
     public class HistoricoUsoElevador
     {
-        public char Elevador{ get; set; }
+        public HistoricoUsoElevador(char elevador, int andar, char turno)
+        {
+            this.Elevador = elevador;
+            this.Andar = andar;
+            this.Turno = turno;
+        }
+        public char Elevador { get; set; }
         public int Andar { get; set; }
-        public char Turni { get; set; }
+        public char Turno { get; set; }
     }
 }
