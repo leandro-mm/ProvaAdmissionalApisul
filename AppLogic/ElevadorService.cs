@@ -103,31 +103,23 @@ namespace AppLogic
         /// <returns>Deve retornar um float (duas casas decimais) contendo o percentual de uso do elevador A em relação a todos os serviços prestados.</returns>
         public float percentualDeUsoElevadorA()
         {
-            if (TotalServicos() == 0)
-                return 0;
-            return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'A').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
+            return VerificarPercentualUsoPorElevador('A', _historicoServices.Count());            
 
         }
 
         public float percentualDeUsoElevadorB()
         {
-            if (TotalServicos() == 0)
-                return 0;
-            return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'B').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
+            return VerificarPercentualUsoPorElevador('B', _historicoServices.Count());            
         }
 
         public float percentualDeUsoElevadorC()
         {
-            if (TotalServicos() == 0)
-                return 0;
-            return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'C').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
+            return VerificarPercentualUsoPorElevador('C', _historicoServices.Count());
         }
 
         public float percentualDeUsoElevadorD()
         {
-            if (TotalServicos() == 0)
-                return 0;
-            return float.Parse(Math.Round(((double)_historicoServices.Where(e => e.Elevador == 'D').Count() / (double)_historicoServices.Count() * 100), 2).ToString());
+            return VerificarPercentualUsoPorElevador('D', _historicoServices.Count());            
         }
 
         /// <summary> Deve retornar um float (duas casas decimais) contendo o percentual de uso do elevador E em relação a todos os serviços prestados. </summary> 
